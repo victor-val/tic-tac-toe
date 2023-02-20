@@ -50,7 +50,8 @@ import './index.css';
           movimientos: Array(9).fill(null),      
         }],
         xIsNext: true,
-        stepNumber: 0,        
+        stepNumber: 0,   
+        isDescendingOrder: true     
       }
     }
 
@@ -81,6 +82,12 @@ import './index.css';
       });
     }
 
+    handleSortToggle(){
+      this.setState({
+        isDescendingOrder: !this.state.isDescendingOrder
+      });
+    }
+
     render() {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
@@ -100,6 +107,10 @@ import './index.css';
         )
       });
 
+      if(!this.state.isDescendingOrder){
+        moves.reverse();
+      }
+
       let status;
       if(winner){
         status = 'Winner: ' + winner;
@@ -116,6 +127,9 @@ import './index.css';
           </div>
           <div className="game-info">
             <div>{status}</div>
+            <button onClick = {() => this.handleSortToggle()}>
+              {this.state.isDescendingOrder ? 'Descending' : 'Ascending'}
+            </button>
             <ol>{moves}</ol>
           </div>
         </div>
