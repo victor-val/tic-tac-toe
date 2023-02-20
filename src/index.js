@@ -52,9 +52,10 @@ import './index.css';
       this.state = {
         history: [{
           squares: Array(9).fill(null),
+          movimientos: Array(9).fill(null),      
         }],
         xIsNext: true,
-        stepNumber: 0
+        stepNumber: 0,        
       }
     }
 
@@ -62,16 +63,19 @@ import './index.css';
       const history = this.state.history.slice(0, this.state.stepNumber + 1);
       const current = history[history.length - 1];
       const squares = [...current.squares];
+      const movimientos = [...current.movimientos];
       if (calculateWinner(squares) || squares[i]) {
         return;
       }
       squares[i] = this.state.xIsNext? 'X': 'O';
+      movimientos[this.state.stepNumber] = i;
       this.setState({
         history: history.concat([{
           squares: squares,
+          movimientos: movimientos
         }]),
         xIsNext: !this.state.xIsNext,
-        stepNumber: history.length
+        stepNumber: history.length,
       });
     }
 
@@ -89,7 +93,7 @@ import './index.css';
 
       const moves = history.map((step, move) => {
         const desc = move ? 
-          'Go to move #' + move :
+          'Go to move #' + move + ' ' + getCoordinates(step.movimientos[move-1]):
           'Go to game start';
         return (
           <li key={move}>
@@ -126,6 +130,15 @@ import './index.css';
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(<Game />);
   
+
+  function getCoordinates(position){
+    const coordinates = [
+      "(0,0)", "(1,0)", "(2,0)",
+      "(0,1)", "(1,1)", "(2,1)",
+      "(0,2)", "(1,2)", "(2,2)",
+    ]
+    return coordinates[position];
+  }
 
   function calculateWinner(squares) {
     const lines = [
