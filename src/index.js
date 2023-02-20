@@ -96,8 +96,11 @@ import './index.css';
           'Go to move #' + move + ' ' + getCoordinates(step.movimientos[move-1]):
           'Go to game start';
         return (
-          <li key={move}>
-            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <li key={move}>            
+            <button onClick={() => this.jumpTo(move)}>
+              {move === this.state.stepNumber ? <b>{desc}</b> : desc}
+              
+              </button>
           </li>
         )
       });
