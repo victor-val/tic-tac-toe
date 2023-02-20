@@ -52,3 +52,7 @@ body {
   .move-list-item-selected{
     font-weight: bold;
   }
+
+  .square.highlight {
+    background: #ffff05;
+  }
