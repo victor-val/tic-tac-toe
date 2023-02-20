@@ -116,6 +116,8 @@ import './index.css';
       let status;
       if(winner){
         status = 'Winner: ' + winner.winner;
+      }else if(isDraw(current.squares)){
+        status = 'It is a draw';
       }else{
         status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
       }  
@@ -176,4 +178,15 @@ import './index.css';
       }
     }
     return null;
+  }
+
+  function isDraw(squares){
+    let isDraw = true;
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i] === null) {
+        isDraw = false;
+        break;
+      }
+    }
+    return isDraw;
   }
